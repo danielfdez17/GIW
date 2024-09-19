@@ -47,11 +47,46 @@ def suma(matriz1, matriz2):
 
 # Ejercicio 2
 def validar(grafo):
-    ...
+    # Diccionario contiene exactamente las claves "nodos" y "aristas"
+    """
+    Valida si un grafo cumple con ciertas condiciones.
+    
+    Parámetros:
+    grafo (diccionario): El grafo a validar. Debe contener las claves "nodos" y "aristas",
+    siendo "nodos" una lista de nodos y "aristas" un diccionario que a cada nodo le
+    asigna una lista de sus nodos vecinos.
+    
+    Returns:
+    bool: True si el grafo es válido, False en caso contrario.
+    """
+
+    if len(grafo) != 2 or 'nodos' not in grafo or 'aristas' not in grafo:
+        return False
+
+    # La lista de nodos es no vacía
+    if len(grafo['aristas']) == 0:
+        return False
+
+    # 'nodos' no tiene nodos repetidos
+    for nodo in grafo['nodos']:
+        if grafo['nodos'].count(nodo) > 1:
+            return False
+
+    # Los nodos origen que aparecen en aristas están definidos en nodos
+    for nodo in grafo['aristas']:
+        if nodo not in grafo['nodos']:
+            return False
+    # Los nodos destino que aparecen en aristas están definidos en nodos
+    for nodo in grafo['aristas']:
+        for destino in grafo['aristas'][nodo]:
+            if destino not in grafo['nodos']:
+                return False
+
+    return True
 
 def grado_entrada(grafo, nodo):
     ...
 
 def distancia(grafo, nodo):
     ...
-   
+
