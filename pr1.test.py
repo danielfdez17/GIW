@@ -3,7 +3,7 @@ import pr1_skel as pr1
 
 class TestEsCuadrada(unittest.TestCase):
     """
-    Clase para probar la función es_cuadrada()
+    Clase para probar la función es_cuadrada(matriz)
     """
     def test_es_cuadrada_ok(self):
         """
@@ -26,7 +26,7 @@ class TestEsCuadrada(unittest.TestCase):
 
 class TestValidar(unittest.TestCase):
     """
-    asdfafds
+    Clase para probar la función validar(grafo)
     """
     grafo_valido = {
         "nodos": ["a", "b", "c", "d"],
@@ -68,14 +68,19 @@ class TestValidar(unittest.TestCase):
             1: [2, 3, 4],
         }
     }
+    grafo_con_nodos_destino_repetidos = {
+        "nodos": [1, 2, 3],
+        "aristas": {
+            1: [2, 3, 2],
+        }
+    }
 
-        
     def test_validar_ok(self):
         """
         Comprueba que un grafo que cumpla con las condiciones sea detectado como v lido.
         """
         self.assertEqual(pr1.validar(self.grafo_valido), True)
-        
+
 
     def test_validar_ko(self):
         """
@@ -89,6 +94,7 @@ class TestValidar(unittest.TestCase):
         self.assertEqual(pr1.validar(self.grafo_con_nodos_repetidos), False)
         self.assertEqual(pr1.validar(self.grafo_con_nodos_origen_no_definidos_en_nodos), False)
         self.assertEqual(pr1.validar(self.grafo_con_nodos_destino_no_definidos_en_nodos), False)
+        self.assertEqual(pr1.validar(self.grafo_con_nodos_destino_repetidos), False)
 
 
 if __name__ == '__main__':

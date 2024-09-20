@@ -60,6 +60,7 @@ def validar(grafo):
     bool: True si el grafo es válido, False en caso contrario.
     """
 
+    # El diccionario contiene exactamente las claves 'nodos' y 'aristas'
     if len(grafo) != 2 or 'nodos' not in grafo or 'aristas' not in grafo:
         return False
 
@@ -72,15 +73,18 @@ def validar(grafo):
         if grafo['nodos'].count(nodo) > 1:
             return False
 
-    # Los nodos origen que aparecen en aristas están definidos en nodos
+    # Los nodos origen que aparecen en aristas son exactamente los nodos definidos en 'nodos'
     for nodo in grafo['aristas']:
         if nodo not in grafo['nodos']:
             return False
-    # Los nodos destino que aparecen en aristas están definidos en nodos
+
+    # Los nodos destino que aparecen en aristas están definidos en nodos y no están repetidos
     for nodo in grafo['aristas']:
+        set_nodos_destino = set()
         for destino in grafo['aristas'][nodo]:
-            if destino not in grafo['nodos']:
+            if destino not in grafo['nodos'] or destino in set_nodos_destino:
                 return False
+            set_nodos_destino.add(destino)
 
     return True
 
@@ -89,4 +93,3 @@ def grado_entrada(grafo, nodo):
 
 def distancia(grafo, nodo):
     ...
-
