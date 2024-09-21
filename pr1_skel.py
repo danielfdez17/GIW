@@ -126,4 +126,49 @@ def grado_entrada(grafo, nodo):
     ...
 
 def distancia(grafo, nodo):
-    ...
+    """
+    Encuentra la distancia minima del nodo pasado por parametro con el resto del grafo
+    
+    Parámetros:
+    grafo (diccionario): El grafo a buscar las distancia minima entre los nodos
+    nodo (string): El nodo a buscar la distancia minima con el resto de nodos
+    
+    Returns:
+    None | dict: None si el grafo es invalido o si el nodo pasado por parametro no existe en el grafo, 
+                 dict devuelve la distancia en forma de diccionario, en caso de que el nodo pasado por
+                 parametro no pueda alcanzarlo devolveremos -1 en el mapa.
+    """
+
+    if validar(grafo) == False: #Comprobamos si el grafo es valido
+        return None
+    
+    found = False
+    i = 0
+    while i < len(grafo['nodos']) and not found: #Comprobamos que exista el nodo en el grafo
+        if grafo['nodos'][i] == nodo:
+            found = True
+        else:
+            i = i + 1
+
+    if not found:
+        return None 
+    
+    distancias = dict() #Map<Nodo, Distanca> = Map<string, int>
+    queue = []
+    for n in grafo['nodos']:#Rellenamos el diccionario de distancias con -1,
+        distancias[n] = -1  #en caso de no ser encontrado y tambien lo usaremos como marcaje
+    
+    distancias[nodo] = 0
+    queue.append(nodo)
+    while len(queue) != 0: #Algoritmo de Recorrido en Anchura
+        v = queue[0]
+        queue.pop(0)
+        for w in grafo["aristas"][v]:
+            if distancias[w] == -1:
+                dist = 0
+                if distancias[v] != -1:
+                    dist = distancias[v]
+                distancias[w] = dist + 1
+                queue.append(w)
+    
+    return distancias

@@ -59,6 +59,69 @@ class TestMultiplicarEscalar(unittest.TestCase):
                                                     [0, 6, 4], 
                                                     [2, 4, 4]], 2), [[4, 0, 4], [0, 12, 8],[4, 8, 8]])
 
+
+class TestDistancia(unittest.TestCase):
+    """
+    Clase para probar la función distancia(grafo, nodo)
+    """
+    grafo_valido = {
+        "nodos": ["a", "b", "c", "d"],
+        "aristas": {
+            "a": ["a", "b", "c"],
+            "b": ["a", "c"],
+            "c": ["c"],
+            "d": ["c"]
+        }
+    }
+
+    grafo_invalido = {
+        "nodos": ["a", "b", "c", "d"],
+        "aristas": {
+            "a": ["a", "b", "h"],
+            "b": ["a", "c"],
+            "c": ["c"],
+            "d": ["c"]
+        }
+    }
+    """
+    Comprobamos si el grafo esta mal construido
+    """
+    def test_is_invalid_graph(self):
+        self.assertIsNone(pr1.distancia(TestDistancia.grafo_invalido, "Z"))
+
+    """
+    Comprobamos si en el grafo existe el nodo a buscar la distancia minima
+    """
+    def test_is_valid_graph_but_not_node(self):
+        self.assertIsNone(pr1.distancia(TestDistancia.grafo_valido, "Z"))
+
+    """
+    Comprobamos si es correcta la distancia del nodo a con el resto de nodos
+    """
+    def test_distance_correct_with_nodo_a(self):
+        self.assertEqual(
+                pr1.distancia(TestDistancia.grafo_valido, "a"), 
+                {'a': 0, 'b': 1, 'c': 1, 'd': -1}
+            )
+    """
+    Comprobamos si es correcta la distancia del nodo b con el resto de nodos
+    """
+    def test_distance_correct_with_nodo_b(self):
+        self.assertEqual(
+                pr1.distancia(TestDistancia.grafo_valido, "b"), 
+                {'a': 1, 'b': 0, 'c': 1, 'd': -1}
+            )
+    
+    """
+    Comprobamos si es correcta la distancia del nodo d con el resto de nodos
+    """
+    def test_distance_correct_with_nodo_d(self):
+        self.assertEqual(
+                pr1.distancia(TestDistancia.grafo_valido, "d"), 
+                {'a': -1, 'b': -1, 'c': 1, 'd': 0}
+            )
+    
+
 class TestValidar(unittest.TestCase):
     """
     Clase para probar la función validar(grafo)
