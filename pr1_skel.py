@@ -39,7 +39,41 @@ def es_simetrica(matriz):
     ...
 
 def multiplica_escalar(matriz, k):
-    ...
+    """
+    Devolvemos una matriz a partir de multiplicar los elementos de la matriz original por el valor k
+    
+    Parámetros:
+    matriz (lista de listas): La matriz a multiplicar.
+    k (entero): El valor para multiplicar los elementos de la matriz
+    
+    Returns:
+    matriz(lista de listas) | None: None en caso de que la matriz este mal construida, devuelve la matriz multiplicada en caso de que es bien construida.
+    """
+
+    if len(matriz) == 0: 
+        return None
+    
+    size = len(matriz[0])
+    col = 0
+    is_correct = True
+    while col < len(matriz) and is_correct:
+        if size != len(matriz[col]):
+            is_correct = False
+        col = col + 1
+
+    if is_correct == False:
+        return None
+    
+    matriz_multi = []
+    for i in range(len(matriz)):
+        add_fila = []
+        for j in range(size):
+            add_fila.append(matriz[i][j] * k)
+        
+        matriz_multi.append(add_fila)
+         
+    return matriz_multi
+        
 
 def suma(matriz1, matriz2):
     ...

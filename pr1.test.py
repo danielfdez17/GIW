@@ -24,6 +24,41 @@ class TestEsCuadrada(unittest.TestCase):
         self.assertEqual(pr1.es_cuadrada([]), True)
 
 
+class TestMultiplicarEscalar(unittest.TestCase):
+    """
+    Clase para probar la función multiplica_escalar(matriz, k)
+    """
+
+    """
+    Comprueba si la matriz es vacia
+    """
+    def test_check_empty_matriz(self):
+        self.assertIsNone(pr1.multiplica_escalar([], 2))
+
+    """
+    Comprueba si la matriz esta bien construida, es decir que las filas tienen el mismo tamanio
+    """
+    def test_check_is_not_build_good_matriz(self):
+        self.assertIsNone(pr1.multiplica_escalar([ 
+                                                  [1], 
+                                                  [1, 2]], 2))
+    
+    """
+    Comprueba si la matriz no es vacia
+    """
+    def test_check_not_empty_matriz(self):
+        self.assertIsNotNone(pr1.multiplica_escalar([ [2, 0, 2], 
+                                                      [0, 6, 4], 
+                                                      [2, 4, 4]], 2))
+
+    """
+    Comprueba si la matriz es multiplicada correctamente por la constante k
+    """
+    def test_check_multiplica_escalar(self):
+        self.assertEqual(pr1.multiplica_escalar([ [2, 0, 2], 
+                                                    [0, 6, 4], 
+                                                    [2, 4, 4]], 2), [[4, 0, 4], [0, 12, 8],[4, 8, 8]])
+
 class TestValidar(unittest.TestCase):
     """
     Clase para probar la función validar(grafo)
