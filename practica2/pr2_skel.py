@@ -19,6 +19,7 @@ resultados de los demás.
 """
 
 import csv
+import json
 from collections import Counter
 from pprint import pprint
 from geopy.geocoders import Nominatim
@@ -52,9 +53,6 @@ def accidentes_por_distrito_tipo(datos):
     return counter
     
 
-datos = lee_fichero_accidentes("AccidentesBicicletas_2021.csv")
-accidentes_por_distrito_tipo(datos)
-
 def dias_mas_accidentes(datos):
     ...
 
@@ -64,7 +62,11 @@ def puntos_negros_distrito(datos, distrito, k):
 
 #### Formato JSON
 def leer_monumentos(ruta):
-    ...
+    monumentos = []
+    with open(ruta, 'r', encoding='utf-8') as file:
+        data = json.load(file)
+        monumentos = data.get('@graph', [])
+    return monumentos
 
 def codigos_postales(monumentos):
     ...
@@ -87,7 +89,7 @@ def busqueda_distancia(monumentos, direccion, distancia):
             longitud = m['location']['longitude']
             coords_monumento = (latitud, longitud)
             calculo_distancia = distance.distance(coords_original, coords_monumento).km
-            if distancia < calculo_distancia:
+            if calculo_distancia < distancia:
                 ternas.append((title, id_monumento, calculo_distancia))
         i += 1
     ternas.sort(key=lambda t: t[2]) #Documnetacion de python ordenar tuplas
