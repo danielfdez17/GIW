@@ -65,7 +65,7 @@ def leer_monumentos(ruta):
     monumentos = []
     with open(ruta, 'r', encoding='utf-8') as file:
         data = json.load(file)
-        monumentos = data.get('@graph', [])
+        monumentos = data.get('@graph')
     return monumentos
 
 def codigos_postales(monumentos):
