@@ -1,0 +1,22 @@
+{
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        "./practica1",
+        "./practica2",
+        "./practica3",
+        "./practica4",
+        "./practica5",
+        "./practica6",
+        "./practica7",
+        "./practica8",
+        "./practica9",
+        "./practica10",
+        "./practica11",
+        "./practica12",
+        "-p",
+        "test_*.py"
+    ],
+    "python.testing.pytestEnabled": false,
+    "python.testing.unittestEnabled": true
+}
