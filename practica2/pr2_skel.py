@@ -23,7 +23,7 @@ import json
 from collections import Counter
 from pprint import pprint
 from geopy.geocoders import Nominatim
-from geopy import distance
+from geopy.distance import distance
 
 ### Formato CSV
 def lee_fichero_accidentes(ruta):
@@ -69,7 +69,12 @@ def leer_monumentos(ruta):
     return monumentos
 
 def codigos_postales(monumentos):
-    ...
+    cod_postal = [monumento.get('address', {}).get('postal-code','') for monumento in monumentos ]
+    num_monumentos = Counter(cod_postal)
+    sol = [(codigo_postal, num_monumentos[codigo_postal]) for codigo_postal in num_monumentos]
+    sol_ordenada = sorted(sol, key=lambda x: (-x[1], cod_postal.index(x[0])))
+    return sol_ordenada
+
 
 def busqueda_palabras_clave(monumentos, palabras):
     ...
