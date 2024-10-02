@@ -8,6 +8,12 @@ validar - Daniel
 grafo_entrada - Kike
 distancia - Jose
 
+### Falta
+- test dimension
+- test es_simetrica
+- test suma
+- test grado_entrada
+
 # Practica 2
 Formato CSV
 - Daniel: lee_fichero_accidentes(ruta)
