@@ -18,7 +18,27 @@ resultados de los demás.
 # Ejercicio 1
 
 def dimension(matriz):
-    ...
+    """
+    Calcula el número de filas y columnas de una matriz.
+
+    Parámetros:
+    matriz (lista de listas): La matriz a analizar.
+
+    Returns:
+    tuple: Un par (filas, columnas) si la matriz tiene una estructura
+           rectangular, None en otro caso.
+    """
+    if not matriz:
+        return None
+
+    filas = len(matriz)
+    columnas = len(matriz[0])
+
+    for fila in matriz[1:]:
+        if len(fila) != columnas:
+            return None
+
+    return filas, columnas
 
 def es_cuadrada(matriz):
     """
@@ -36,7 +56,23 @@ def es_cuadrada(matriz):
     return False
 
 def es_simetrica(matriz):
-    ...
+    """
+    Comprueba si una matriz es simétrica.
+
+    Parámetros:
+    matriz (lista de listas): La matriz a comprobar.
+
+    Returns:
+    bool: True si la matriz es simétrica, False en otro caso.
+    """
+    if es_cuadrada(matriz) is False:
+        return False
+
+    for fila, num_a in enumerate(matriz):
+        for columna, _ in enumerate(num_a):
+            if matriz[fila][columna] != matriz[columna][fila]:
+                return False
+    return True
 
 def multiplica_escalar(matriz, k):
     """
@@ -47,12 +83,13 @@ def multiplica_escalar(matriz, k):
     k (entero): El valor para multiplicar los elementos de la matriz
     
     Returns:
-    matriz(lista de listas) | None: None en caso de que la matriz este mal construida, devuelve la matriz multiplicada en caso de que es bien construida.
+    matriz(lista de listas) | None: None en caso de que la matriz este mal construida, 
+    devuelve la matriz multiplicada en caso de que es bien construida.
     """
 
-    if len(matriz) == 0: 
+    if len(matriz) == 0:
         return None
-    
+
     size = len(matriz[0])
     col = 0
     is_correct = True
@@ -61,22 +98,42 @@ def multiplica_escalar(matriz, k):
             is_correct = False
         col = col + 1
 
-    if is_correct == False:
+    if is_correct is False:
         return None
-    
+
     matriz_multi = []
-    for i in range(len(matriz)):
+    for i in matriz:
         add_fila = []
-        for j in range(size):
-            add_fila.append(matriz[i][j] * k)
-        
+        for j in i:
+            add_fila.append(j * k)
+
         matriz_multi.append(add_fila)
-         
+
     return matriz_multi
-        
+
 
 def suma(matriz1, matriz2):
-    ...
+    """
+    Suma dos matrices.
+
+    Parámetros:
+    matriz1 (lista de listas): La primera matriz a sumar.
+    matriz2 (lista de listas): La segunda matriz a sumar.
+
+    Returns:
+    lista de listas | None: La suma de las dos matrices, None si las matrices no pueden ser sumadas.
+    """
+    mat1 = dimension(matriz1)
+    mat2 = dimension(matriz2)
+    if mat1[0] != mat2[0] or mat1[1] != mat2[1] :
+        return None
+
+    matriz_resultado = [[0 for i in range(mat1[1])] for j in range(mat1[0])]
+    for i in range(mat1[0]):
+        for j in range(mat1[1]):
+            matriz_resultado[i][j] = matriz1[i][j] + matriz2[i][j]
+    print(mat1, " : ", mat2)
+    return matriz_resultado
 
 
 # Ejercicio 2
@@ -123,25 +180,66 @@ def validar(grafo):
     return True
 
 def grado_entrada(grafo, nodo):
-    ...
+    """
+    Encuentra el grado de entrada de un nodo en un grafo.
+
+    El grado de entrada de un nodo en un grafo es el número de aristas que
+    llegan a ese nodo.
+
+    Parámetros:
+    grafo (diccionario): El grafo en el que se encuentra el nodo.
+    nodo (string): El nodo del que se quiere calcular el grado de entrada.
+
+    Returns:
+    int: El grado de entrada del nodo. Si el grafo no es válido o el nodo
+    no existe en el grafo, se devuelve -1.
+    """
+    if validar(grafo) is False:
+        return -1
+
+    # Esta función comprueba que el nodo exista en la lista de nodos del grafo
+    if nodo not in grafo["nodos"]:
+        return -1
+
+    cont = 0
+
+    for _, b in grafo["aristas"].items():
+        if nodo in b:
+            cont += 1
+
+    return cont
+
+grafoG = {"nodos": ["a", "b", "c", "d"],
+    "aristas": {"a": ["a", "b", "c"],
+                "b": ["a", "c"],
+                "c": ["c"],
+                "d": ["c"]
+                }
+    }
+
+print(grado_entrada(grafoG, "a"))
+print(grado_entrada(grafoG, "d"))
+print(grado_entrada(grafoG, "Z"))
+print(grado_entrada({"nodos": [1, 2], "aristas": {1: [2]}}, "2"))
 
 def distancia(grafo, nodo):
     """
-    Encuentra la distancia minima del nodo pasado por parametro con el resto del grafo
+    Encuentra la distancia minima del nodo pasado por parámetro con el resto del grafo
     
     Parámetros:
     grafo (diccionario): El grafo a buscar las distancia minima entre los nodos
     nodo (string): El nodo a buscar la distancia minima con el resto de nodos
     
     Returns:
-    None | dict: None si el grafo es invalido o si el nodo pasado por parametro no existe en el grafo, 
-                 dict devuelve la distancia en forma de diccionario, en caso de que el nodo pasado por
-                 parametro no pueda alcanzarlo devolveremos -1 en el mapa.
+    None | dict: 
+    None si el grafo es invalido o si el nodo pasado por parámetro no existe en el grafo, 
+    dict devuelve la distancia en forma de diccionario, en caso de que el nodo pasado por
+    parámetro no pueda alcanzarlo devolveremos -1 en el mapa.
     """
 
-    if validar(grafo) == False: #Comprobamos si el grafo es valido
+    if validar(grafo) is False: #Comprobamos si el grafo es valido
         return None
-    
+
     found = False
     i = 0
     while i < len(grafo['nodos']) and not found: #Comprobamos que exista el nodo en el grafo
@@ -151,13 +249,13 @@ def distancia(grafo, nodo):
             i = i + 1
 
     if not found:
-        return None 
-    
-    distancias = dict() #Map<Nodo, Distanca> = Map<string, int>
+        return None
+
+    distancias = dict() #Map<Nodo, Distancia> = Map<string, int>
     queue = []
     for n in grafo['nodos']:#Rellenamos el diccionario de distancias con -1,
-        distancias[n] = -1  #en caso de no ser encontrado y tambien lo usaremos como marcaje
-    
+        distancias[n] = -1  #en caso de no ser encontrado y también lo usaremos como marcaje
+
     distancias[nodo] = 0
     queue.append(nodo)
     while len(queue) != 0: #Algoritmo de Recorrido en Anchura
@@ -170,5 +268,5 @@ def distancia(grafo, nodo):
                     dist = distancias[v]
                 distancias[w] = dist + 1
                 queue.append(w)
-    
+
     return distancias
