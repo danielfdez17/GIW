@@ -29,35 +29,38 @@ class TestMultiplicarEscalar(unittest.TestCase):
     Clase para probar la función multiplica_escalar(matriz, k)
     """
 
-    """
-    Comprueba si la matriz es vacia
-    """
     def test_check_empty_matriz(self):
+        """
+        Comprueba si la matriz es vacía
+        """
         self.assertIsNone(pr1.multiplica_escalar([], 2))
 
-    """
-    Comprueba si la matriz esta bien construida, es decir que las filas tienen el mismo tamanio
-    """
     def test_check_is_not_build_good_matriz(self):
-        self.assertIsNone(pr1.multiplica_escalar([ 
-                                                  [1], 
+        """
+        Comprueba si la matriz esta bien construida, es decir que las filas tienen el mismo tamaño
+        """
+        self.assertIsNone(pr1.multiplica_escalar([
+                                                  [1],
                                                   [1, 2]], 2))
-    
-    """
-    Comprueba si la matriz no es vacia
-    """
+
     def test_check_not_empty_matriz(self):
-        self.assertIsNotNone(pr1.multiplica_escalar([ [2, 0, 2], 
-                                                      [0, 6, 4], 
+        """
+        Comprueba si la matriz no es vacía
+        """
+        self.assertIsNotNone(pr1.multiplica_escalar([ [2, 0, 2],
+                                                      [0, 6, 4],
                                                       [2, 4, 4]], 2))
 
-    """
-    Comprueba si la matriz es multiplicada correctamente por la constante k
-    """
     def test_check_multiplica_escalar(self):
-        self.assertEqual(pr1.multiplica_escalar([ [2, 0, 2], 
-                                                    [0, 6, 4], 
-                                                    [2, 4, 4]], 2), [[4, 0, 4], [0, 12, 8],[4, 8, 8]])
+        """
+        Comprueba si la matriz es multiplicada correctamente por la constante k
+        """
+        self.assertEqual(pr1.multiplica_escalar([   [2, 0, 2],
+                                                    [0, 6, 4],
+                                                    [2, 4, 4]], 2),
+                                                    [[4, 0, 4],
+                                                    [0, 12, 8],
+                                                    [4, 8, 8]])
 
 
 class TestDistancia(unittest.TestCase):
@@ -83,44 +86,44 @@ class TestDistancia(unittest.TestCase):
             "d": ["c"]
         }
     }
-    """
-    Comprobamos si el grafo esta mal construido
-    """
     def test_is_invalid_graph(self):
+        """
+        Comprobamos si el grafo esta mal construido
+        """
         self.assertIsNone(pr1.distancia(TestDistancia.grafo_invalido, "Z"))
 
-    """
-    Comprobamos si en el grafo existe el nodo a buscar la distancia minima
-    """
     def test_is_valid_graph_but_not_node(self):
+        """
+        Comprobamos si en el grafo existe el nodo a buscar la distancia minima
+        """
         self.assertIsNone(pr1.distancia(TestDistancia.grafo_valido, "Z"))
 
-    """
-    Comprobamos si es correcta la distancia del nodo a con el resto de nodos
-    """
     def test_distance_correct_with_nodo_a(self):
+        """
+        Comprobamos si es correcta la distancia del nodo a con el resto de nodos
+        """
         self.assertEqual(
-                pr1.distancia(TestDistancia.grafo_valido, "a"), 
+                pr1.distancia(TestDistancia.grafo_valido, "a"),
                 {'a': 0, 'b': 1, 'c': 1, 'd': -1}
             )
-    """
-    Comprobamos si es correcta la distancia del nodo b con el resto de nodos
-    """
     def test_distance_correct_with_nodo_b(self):
+        """
+        Comprobamos si es correcta la distancia del nodo b con el resto de nodos
+        """
         self.assertEqual(
-                pr1.distancia(TestDistancia.grafo_valido, "b"), 
+                pr1.distancia(TestDistancia.grafo_valido, "b"),
                 {'a': 1, 'b': 0, 'c': 1, 'd': -1}
             )
     
-    """
-    Comprobamos si es correcta la distancia del nodo d con el resto de nodos
-    """
     def test_distance_correct_with_nodo_d(self):
+        """
+        Comprobamos si es correcta la distancia del nodo d con el resto de nodos
+        """
         self.assertEqual(
-                pr1.distancia(TestDistancia.grafo_valido, "d"), 
+                pr1.distancia(TestDistancia.grafo_valido, "d"),
                 {'a': -1, 'b': -1, 'c': 1, 'd': 0}
             )
-    
+
 
 class TestValidar(unittest.TestCase):
     """
