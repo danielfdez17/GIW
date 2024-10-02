@@ -57,7 +57,31 @@ def dias_mas_accidentes(datos):
     ...
 
 def puntos_negros_distrito(datos, distrito, k):
-    ...
+    filter_list = []
+    for data in datos:
+        if data['distrito'] == distrito:
+            filter_list.append(data)
+
+    map_it = dict()
+    for l in filter_list:
+        if l['localizacion'] not in map_it:
+            map_it[l['localizacion']] = 1
+        else: 
+             map_it[l['localizacion']] += 1
+
+    list_order = []
+    for distrito_map, n_accidentes in map_it.items():
+        list_order.append((distrito_map, n_accidentes))
+
+    list_order.sort(key=lambda n: (n[1], n[0]), reverse=True)
+    i = 0
+    list_final = []
+    while i < k:
+        list_final.append((list_order[i][0], list_order[i][1]))
+        i += 1
+
+    return list_final
+
 
 
 #### Formato JSON
