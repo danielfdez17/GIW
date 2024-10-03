@@ -16,36 +16,43 @@
 # resultados de los demás.
 
 import xml.sax
+import html
+from pprint import pprint
 
-        self.num_evento += 1
 
 def nombres_restaurantes(filename):
     class ManejadorNombresRestaurantes(xml.sax.ContentHandler):
         
         def __init__(self):
-            self.tabulador = ""
-            self.num_evento = 1
+            self.texto = ""
+            self.lista = []
 
-        def startDocument(self):
-            print(f'{self.tabulador}{self.num_evento}) **Inicio de documento**')
-            self.num_evento += 1
+        # def startDocument(self):
 
-        def endDocument(self):
-            print(f'{self.tabulador}{self.num_evento}) **Fin de documento**')
-            self.num_evento += 1
+        # def endDocument(self):
             
         def startElement(self, etiqueta, atributos):
-            print(f'{self.tabulador}{self.num_evento}) Inicio de etiqueta <{etiqueta}> con atributos {atributos.items()}')
-            self.tabulador += "    "  # Aumenta la sangría
-            self.num_evento += 1
-
+            self.texto = ""
         def characters(self, contenido):
-            print(f'{self.tabulador}{self.num_evento}) Leyendo cadena de caracteres: "{contenido}"')
-            self.num_evento += 1
+            self.texto += contenido
                 
         def endElement(self, etiqueta):
-            self.tabulador = self.tabulador[:-4]  # Reduce la sangría
-            print(f'{self.tabulador}{self.num_evento}) Final de etiqueta <{etiqueta}>')
+            if etiqueta == "name":
+                self.lista.append(html.unescape(self.texto.strip()))
+
+        def getLista(self):
+            return self.lista
+
+    parser = xml.sax.make_parser()
+    manejador = ManejadorNombresRestaurantes()
+    parser.setContentHandler(manejador)
+    parser.parse(filename)
+    return sorted(manejador.getLista())
+
+# pprint(nombres_restaurantes("practica3/restaurantes_v1_es_pretty.xml"))
+# pprint(nombres_restaurantes("practica3/restaurantes_v1_es.xml"))
+
+
 
 
 def subcategorias(filename):
