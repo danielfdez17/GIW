@@ -54,7 +54,23 @@ def accidentes_por_distrito_tipo(datos):
     
 
 def dias_mas_accidentes(datos):
-    ...
+    """
+    Devuelve las fechas del día o días con más accidentes, junto con ese número de accidentes, 
+    tomando como entrada una lista de diccionarios como el primer apartado. Debe devolver un conjunto
+    de parejas (días, número de accidentes). """
+
+    lista = {}
+    for dia in datos:
+        if dia.get('fecha') in lista:
+            lista[dia.get('fecha')] += 1
+        else:
+            lista[dia.get('fecha')] = 1
+
+    max_accidentes = max(lista.values())
+    peores_dias = [(fecha, accidentes) for fecha, accidentes in lista.items()
+                   if accidentes == max_accidentes]
+    
+    return peores_dias
 
 def puntos_negros_distrito(datos, distrito, k):
     filter_list = []
@@ -100,8 +116,26 @@ def codigos_postales(monumentos):
     return sol_ordenada
 
 
-def busqueda_palabras_clave(monumentos, palabras):
-    ...
+def busqueda_palabras_clave(monumentos, palabras):  
+    """
+    Recibe una lista de monumentos y una lista de palabras clave, y devuelve un conjunto
+    de parejas (título, distrito) de aquellos monumentos que contienen las palabras clave en su título
+    o en su descripción (campo 'organization-desc').
+    El valor de distrito será la URL almacenada en el campo "@id" dentro de address > district, y si
+    este campo no existe el valor de distrito será la cadena vacía. """
+
+    resultado = set()
+    for monumento in monumentos:
+        for i, palabra in enumerate(palabras):
+            buscar_nombre = monumento.get('nombre').lower().find(palabra)
+            buscar_descripcion = monumento.get('descripcion').lower().find(palabra)
+
+            if buscar_nombre == -1 and buscar_descripcion == -1:
+                break
+            if i == len(palabras) - 1:
+                resultado.add((monumento.get('nombre'), monumento.get('distrito')))
+    return resultado
+    
 
 def busqueda_distancia(monumentos, direccion, distancia):
     geolocator = Nominatim(user_agent="GIW_pr2")
