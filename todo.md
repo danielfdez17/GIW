@@ -26,3 +26,10 @@ Formato JSON
 - Airam: codigos_postales(monumentos)
 - Kike: busqueda_palabras_clave(monumentos, palabras)
 - Jose: busqueda_distancia(monumentos, dirección, distancia)
+
+
+# Practica 3
++ nombres_restaurantes - Daniel
++ subcategorias - Airam
++ info_restaurante - Luis
++ busqueda_cercania - Jose
