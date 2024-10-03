@@ -1,6 +1,29 @@
 import unittest
 import pr1_skel as pr1
 
+class TestDimension(unittest.TestCase):
+    """
+    Clase para probar la función dimension(matriz)
+    """
+    matriz_a = [
+        [1, 0, 2, 5],
+        [0, 3, 3, 5],
+        [1, 2, 2, 5]]
+    matriz_b = [
+        [1, 0, 1],
+        [0, 3, 2],
+        [1, 2, 2]
+    ]
+    def test_dimension_ok(self):
+        self.assertEqual(pr1.dimension(self.matriz_a), (3, 4))
+        self.assertEqual(pr1.dimension(self.matriz_b), (3, 3))
+    
+    def test_dimension_lista_vacia(self):
+        self.assertIsNone(pr1.dimension([]))
+
+    def test_dimension_lista_con_filas_distinto_tamanyo(self):
+        self.assertIsNone(pr1.dimension([[1, 2], [3, 4, 5]]))
+
 class TestEsCuadrada(unittest.TestCase):
     """
     Clase para probar la función es_cuadrada(matriz)
@@ -21,8 +44,32 @@ class TestEsCuadrada(unittest.TestCase):
         """
         Comprueba que una matriz vac a sea detectada como cuadrada.
         """
-        self.assertEqual(pr1.es_cuadrada([]), True)
+        self.assertEqual(pr1.es_cuadrada([]), False)
 
+class TestEsSimetrica(unittest.TestCase):
+    matriz_a = [
+        [1, 0, 2, 5],
+        [0, 3, 3, 5],
+        [1, 2, 2, 5]]
+    matriz_b = [
+        [1, 0, 1],
+        [0, 3, 2],
+        [1, 2, 2]
+    ]
+    """
+    Clase para probar la función es_simetrica(matriz)
+    """
+    def test_es_simetrica_ok(self):
+        """
+        Comprueba que una matriz simétrica sea detectada correctamente.
+        """
+        self.assertEqual(pr1.es_simetrica(self.matriz_a), False)
+
+    def test_es_simetrica_ko(self):
+        """
+        Comprueba que una matriz no simétrica no sea detectada como tal.
+        """
+        self.assertEqual(pr1.es_simetrica(self.matriz_b), True)
 
 class TestMultiplicarEscalar(unittest.TestCase):
     """
@@ -62,68 +109,29 @@ class TestMultiplicarEscalar(unittest.TestCase):
                                                     [0, 12, 8],
                                                     [4, 8, 8]])
 
-
-class TestDistancia(unittest.TestCase):
+class TestSuma(unittest.TestCase):
     """
-    Clase para probar la función distancia(grafo, nodo)
+    Clase para probar la función suma(grafo, nodo)
     """
-    grafo_valido = {
-        "nodos": ["a", "b", "c", "d"],
-        "aristas": {
-            "a": ["a", "b", "c"],
-            "b": ["a", "c"],
-            "c": ["c"],
-            "d": ["c"]
-        }
-    }
-
-    grafo_invalido = {
-        "nodos": ["a", "b", "c", "d"],
-        "aristas": {
-            "a": ["a", "b", "h"],
-            "b": ["a", "c"],
-            "c": ["c"],
-            "d": ["c"]
-        }
-    }
-    def test_is_invalid_graph(self):
-        """
-        Comprobamos si el grafo esta mal construido
-        """
-        self.assertIsNone(pr1.distancia(TestDistancia.grafo_invalido, "Z"))
-
-    def test_is_valid_graph_but_not_node(self):
-        """
-        Comprobamos si en el grafo existe el nodo a buscar la distancia minima
-        """
-        self.assertIsNone(pr1.distancia(TestDistancia.grafo_valido, "Z"))
-
-    def test_distance_correct_with_nodo_a(self):
-        """
-        Comprobamos si es correcta la distancia del nodo a con el resto de nodos
-        """
-        self.assertEqual(
-                pr1.distancia(TestDistancia.grafo_valido, "a"),
-                {'a': 0, 'b': 1, 'c': 1, 'd': -1}
-            )
-    def test_distance_correct_with_nodo_b(self):
-        """
-        Comprobamos si es correcta la distancia del nodo b con el resto de nodos
-        """
-        self.assertEqual(
-                pr1.distancia(TestDistancia.grafo_valido, "b"),
-                {'a': 1, 'b': 0, 'c': 1, 'd': -1}
-            )
+    matriz_a = [
+        [1, 0, 2, 5],
+        [0, 3, 3, 5],
+        [1, 2, 2, 5]]
+    matriz_b = [
+        [1, 0, 1],
+        [0, 3, 2],
+        [1, 2, 2]
+    ]
+    def test_suma_ok(self):
+        self.assertEqual(pr1.suma(self.matriz_a, self.matriz_a),
+        [
+            [2, 0, 4, 10],
+            [0, 6, 6, 10],
+            [2, 4, 4, 10]
+        ])
     
-    def test_distance_correct_with_nodo_d(self):
-        """
-        Comprobamos si es correcta la distancia del nodo d con el resto de nodos
-        """
-        self.assertEqual(
-                pr1.distancia(TestDistancia.grafo_valido, "d"),
-                {'a': -1, 'b': -1, 'c': 1, 'd': 0}
-            )
-
+    def test_suma_ko(self):
+        self.assertIsNone(pr1.suma(self.matriz_a, self.matriz_b))
 
 class TestValidar(unittest.TestCase):
     """
@@ -197,6 +205,84 @@ class TestValidar(unittest.TestCase):
         self.assertEqual(pr1.validar(self.grafo_con_nodos_destino_no_definidos_en_nodos), False)
         self.assertEqual(pr1.validar(self.grafo_con_nodos_destino_repetidos), False)
 
+class TestGradoEntrada(unittest.TestCase):
+    """
+    Clase para probar la función gradoEntrada(grafo, nodo)
+    """
+    grafo = {"nodos": ["a", "b", "c", "d"],
+    "aristas": {"a": ["a", "b", "c"],
+                "b": ["a", "c"],
+                "c": ["c"],
+                "d": ["c"]
+                }
+    }
+
+    def test_grado_entrada_ok(self):
+        self.assertEqual(pr1.grado_entrada(self.grafo, "a"), 2)
+        self.assertEqual(pr1.grado_entrada(self.grafo, "d"), 0)
+        self.assertEqual(pr1.grado_entrada(self.grafo, "Z"), -1)
+        self.assertEqual(pr1.grado_entrada({"nodos": [1,2], "aristas": {1: [2]}}, "2"), -1)
+
+class TestDistancia(unittest.TestCase):
+    """
+    Clase para probar la función distancia(grafo, nodo)
+    """
+    grafo_valido = {
+        "nodos": ["a", "b", "c", "d"],
+        "aristas": {
+            "a": ["a", "b", "c"],
+            "b": ["a", "c"],
+            "c": ["c"],
+            "d": ["c"]
+        }
+    }
+
+    grafo_invalido = {
+        "nodos": ["a", "b", "c", "d"],
+        "aristas": {
+            "a": ["a", "b", "h"],
+            "b": ["a", "c"],
+            "c": ["c"],
+            "d": ["c"]
+        }
+    }
+    def test_is_invalid_graph(self):
+        """
+        Comprobamos si el grafo esta mal construido
+        """
+        self.assertIsNone(pr1.distancia(TestDistancia.grafo_invalido, "Z"))
+
+    def test_is_valid_graph_but_not_node(self):
+        """
+        Comprobamos si en el grafo existe el nodo a buscar la distancia minima
+        """
+        self.assertIsNone(pr1.distancia(TestDistancia.grafo_valido, "Z"))
+
+    def test_distance_correct_with_nodo_a(self):
+        """
+        Comprobamos si es correcta la distancia del nodo a con el resto de nodos
+        """
+        self.assertEqual(
+                pr1.distancia(TestDistancia.grafo_valido, "a"),
+                {'a': 0, 'b': 1, 'c': 1, 'd': -1}
+            )
+    def test_distance_correct_with_nodo_b(self):
+        """
+        Comprobamos si es correcta la distancia del nodo b con el resto de nodos
+        """
+        self.assertEqual(
+                pr1.distancia(TestDistancia.grafo_valido, "b"),
+                {'a': 1, 'b': 0, 'c': 1, 'd': -1}
+            )
+    
+    def test_distance_correct_with_nodo_d(self):
+        """
+        Comprobamos si es correcta la distancia del nodo d con el resto de nodos
+        """
+        self.assertEqual(
+                pr1.distancia(TestDistancia.grafo_valido, "d"),
+                {'a': -1, 'b': -1, 'c': 1, 'd': 0}
+            )
 
 if __name__ == '__main__':
     unittest.main()

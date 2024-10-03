@@ -28,7 +28,7 @@ def dimension(matriz):
     tuple: Un par (filas, columnas) si la matriz tiene una estructura
            rectangular, None en otro caso.
     """
-    if not matriz:
+    if not matriz or not isinstance(matriz, list):
         return None
 
     filas = len(matriz)
@@ -50,10 +50,14 @@ def es_cuadrada(matriz):
     Returns:
     bool: True si la matriz es cuadrada, False en otro caso.
     """
-    if (len(matriz) == 0 or len(matriz) == len(matriz[0])):
-        return True
+    if dimension(matriz) is None or not isinstance(matriz, list):
+        return False
+    dim = dimension(matriz)
+    return dim[0] == dim[1]
+    # if (len(matriz) == 0 or len(matriz) == len(matriz[0])):
+        # return True
 
-    return False
+    # return False
 
 def es_simetrica(matriz):
     """
@@ -87,7 +91,7 @@ def multiplica_escalar(matriz, k):
     devuelve la matriz multiplicada en caso de que es bien construida.
     """
 
-    if len(matriz) == 0:
+    if es_cuadrada(matriz) is False or len(matriz) == 0:
         return None
 
     size = len(matriz[0])
@@ -111,7 +115,6 @@ def multiplica_escalar(matriz, k):
 
     return matriz_multi
 
-
 def suma(matriz1, matriz2):
     """
     Suma dos matrices.
@@ -125,7 +128,7 @@ def suma(matriz1, matriz2):
     """
     mat1 = dimension(matriz1)
     mat2 = dimension(matriz2)
-    if mat1[0] != mat2[0] or mat1[1] != mat2[1] :
+    if mat1 is None or mat2 is None or mat1[0] != mat2[0] or mat1[1] != mat2[1] :
         return None
 
     matriz_resultado = [[0 for i in range(mat1[1])] for j in range(mat1[0])]
