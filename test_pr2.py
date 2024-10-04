@@ -1,5 +1,5 @@
 import unittest
-import pr2_skel as pr2
+import pr2
 from pprint import pprint
 
 class TestLeerFicheroAccidentes(unittest.TestCase):

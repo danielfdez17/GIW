@@ -76,9 +76,8 @@ def es_simetrica(matriz):
 
     for fila, num_a in enumerate(matriz):
         for columna, _ in enumerate(num_a):
-            if matriz[fila][columna] != matriz[columna][fila]:
+            if num_a[columna] != matriz[columna][fila]:
                 return False
-
     return True
 
 def multiplica_escalar(matriz, k):
@@ -240,7 +239,7 @@ def distancia(grafo, nodo):
     if not found:
         return None
 
-    distancias = dict() #Map<Nodo, Distancia> = Map<string, int>
+    distancias = {} #Map<Nodo, Distancia> = Map<string, int>
     queue = []
     for n in grafo['nodos']: #Rellenamos el diccionario de distancias con -1,
         distancias[n] = -1  #en caso de no ser encontrado y también lo usaremos como marcaje
