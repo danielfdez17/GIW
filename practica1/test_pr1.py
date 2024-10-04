@@ -1,5 +1,5 @@
 import unittest
-import pr1_skel as pr1
+import pr1
 
 class TestDimension(unittest.TestCase):
     """

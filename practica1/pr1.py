@@ -4,7 +4,11 @@ TODO: rellenar
 Asignatura: GIW
 Práctica 1
 Grupo: 05
-Autores: Daniel Fernández Ortiz, Airam Martín Peraza, José Waldo Villacres Zumaeta
+Autores: 
+- Luis Enrique Barrero Peña 
+- Daniel Fernández Ortiz
+- Airam Martín Peraza
+- José Waldo Villacres Zumaeta
 
 Declaramos que esta solución es fruto exclusivamente de nuestro trabajo personal. No hemos
 sido ayudados por ninguna otra persona o sistema automático ni hemos obtenido la solución
@@ -50,15 +54,16 @@ def es_cuadrada(matriz):
     Returns:
     bool: True si la matriz es cuadrada, False en otro caso.
     """
-    if dimension(matriz) is None or not isinstance(matriz, list):
+    dim = dimension(matriz)
+
+    if dim is None or not isinstance(matriz, list):
         return False
 
-    dim = dimension(matriz)
     return dim[0] == dim[1]
 
 def es_simetrica(matriz):
     """
-    Comprueba si una matriz es simétrica.
+    Función que comprueba si una matriz es simétrica.
 
     Parámetros:
     matriz (lista de listas): La matriz a comprobar.
@@ -73,19 +78,20 @@ def es_simetrica(matriz):
         for columna, _ in enumerate(num_a):
             if matriz[fila][columna] != matriz[columna][fila]:
                 return False
+
     return True
 
 def multiplica_escalar(matriz, k):
     """
-    Devolvemos una matriz a partir de multiplicar los elementos de la matriz original por el valor k
+    Función que devuelve la matriz multiplicada por un escalar k.
     
     Parámetros:
     matriz (lista de listas): La matriz a multiplicar.
     k (entero): El valor para multiplicar los elementos de la matriz
     
     Returns:
-    matriz(lista de listas) | None: None en caso de que la matriz este mal construida, 
-    devuelve la matriz multiplicada en caso de que es bien construida.
+    matriz(lista de listas) | None: None si la matriz está mal construida, 
+    la matriz multiplicada por el escalar en otro caso.
     """
 
     if es_cuadrada(matriz) is False or len(matriz) == 0:
@@ -114,7 +120,7 @@ def multiplica_escalar(matriz, k):
 
 def suma(matriz1, matriz2):
     """
-    Suma dos matrices.
+    Función que devuelve la suma de dos matrices.
 
     Parámetros:
     matriz1 (lista de listas): La primera matriz a sumar.
@@ -125,6 +131,7 @@ def suma(matriz1, matriz2):
     """
     mat1 = dimension(matriz1)
     mat2 = dimension(matriz2)
+
     if mat1 is None or mat2 is None or mat1[0] != mat2[0] or mat1[1] != mat2[1] :
         return None
 
@@ -132,20 +139,19 @@ def suma(matriz1, matriz2):
     for i in range(mat1[0]):
         for j in range(mat1[1]):
             matriz_resultado[i][j] = matriz1[i][j] + matriz2[i][j]
-    print(mat1, " : ", mat2)
+
     return matriz_resultado
 
 
 # Ejercicio 2
 def validar(grafo):
-    # Diccionario contiene exactamente las claves "nodos" y "aristas"
     """
-    Valida si un grafo cumple con ciertas condiciones.
+    Función que comprueba si un grafo está bien construido.
     
     Parámetros:
     grafo (diccionario): El grafo a validar. Debe contener las claves "nodos" y "aristas",
-    siendo "nodos" una lista de nodos y "aristas" un diccionario que a cada nodo le
-    asigna una lista de sus nodos vecinos.
+    siendo "nodos" una lista de nodos y "aristas" un diccionario en el cual 
+    cada nodo tiene una lista de sus nodos adyacentes.
     
     Returns:
     bool: True si el grafo es válido, False en caso contrario.
@@ -181,13 +187,10 @@ def validar(grafo):
 
 def grado_entrada(grafo, nodo):
     """
-    Encuentra el grado de entrada de un nodo en un grafo.
-
-    El grado de entrada de un nodo en un grafo es el número de aristas que
-    llegan a ese nodo.
+    Función que devuelve el grado de entrada de un nodo en un grafo.
 
     Parámetros:
-    grafo (diccionario): El grafo en el que se encuentra el nodo.
+    grafo (diccionario): El grafo en el que puede estar o no el nodo.
     nodo (string): El nodo del que se quiere calcular el grado de entrada.
 
     Returns:
@@ -197,7 +200,6 @@ def grado_entrada(grafo, nodo):
     if validar(grafo) is False:
         return -1
 
-    # Esta función comprueba que el nodo exista en la lista de nodos del grafo
     if nodo not in grafo["nodos"]:
         return -1
 
@@ -209,40 +211,27 @@ def grado_entrada(grafo, nodo):
 
     return cont
 
-grafoG = {"nodos": ["a", "b", "c", "d"],
-    "aristas": {"a": ["a", "b", "c"],
-                "b": ["a", "c"],
-                "c": ["c"],
-                "d": ["c"]
-                }
-    }
-
-print(grado_entrada(grafoG, "a"))
-print(grado_entrada(grafoG, "d"))
-print(grado_entrada(grafoG, "Z"))
-print(grado_entrada({"nodos": [1, 2], "aristas": {1: [2]}}, "2"))
-
 def distancia(grafo, nodo):
     """
-    Encuentra la distancia minima del nodo pasado por parámetro con el resto del grafo
+    Función que devuelve la distancia mínima del nodo pasado por parámetro con el resto del grafo
     
     Parámetros:
-    grafo (diccionario): El grafo a buscar las distancia minima entre los nodos
-    nodo (string): El nodo a buscar la distancia minima con el resto de nodos
+    grafo (diccionario): El grafo en el que buscar las distancias mínimas entre los nodos
+    nodo (string): El nodo del que se quiere saber la distancia mínima con el resto de nodos
     
     Returns:
     None | dict: 
-    None si el grafo es invalido o si el nodo pasado por parámetro no existe en el grafo, 
+    None si el grafo es inválido o si el nodo pasado por parámetro no existe en el grafo, 
     dict devuelve la distancia en forma de diccionario, en caso de que el nodo pasado por
-    parámetro no pueda alcanzarlo devolveremos -1 en el mapa.
+    parámetro no pueda alcanzarlo se asigna -1 a dicho nodo no alcanzado.
     """
 
-    if validar(grafo) is False: #Comprobamos si el grafo es valido
+    if validar(grafo) is False:
         return None
 
     found = False
     i = 0
-    while i < len(grafo['nodos']) and not found: #Comprobamos que exista el nodo en el grafo
+    while i < len(grafo['nodos']) and not found:
         if grafo['nodos'][i] == nodo:
             found = True
         else:
@@ -253,7 +242,7 @@ def distancia(grafo, nodo):
 
     distancias = dict() #Map<Nodo, Distancia> = Map<string, int>
     queue = []
-    for n in grafo['nodos']:#Rellenamos el diccionario de distancias con -1,
+    for n in grafo['nodos']: #Rellenamos el diccionario de distancias con -1,
         distancias[n] = -1  #en caso de no ser encontrado y también lo usaremos como marcaje
 
     distancias[nodo] = 0
