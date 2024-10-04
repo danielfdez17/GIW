@@ -19,16 +19,16 @@ resultados de los demás.
 
 def dimension(matriz):
     """
-    Calcula el número de filas y columnas de una matriz.
+    Función que devuelve el número de filas y columnas de una matriz.
 
     Parámetros:
     matriz (lista de listas): La matriz a analizar.
 
     Returns:
-    tuple: Un par (filas, columnas) si la matriz tiene una estructura
-           rectangular, None en otro caso.
+    tuple: Un par (filas, columnas) si la matriz tiene tiene filas que son del mismo tamaño, 
+                None en otro caso.
     """
-    if not matriz or not isinstance(matriz, list):
+    if not isinstance(matriz, list) or not matriz:
         return None
 
     filas = len(matriz)
@@ -38,11 +38,11 @@ def dimension(matriz):
         if len(fila) != columnas:
             return None
 
-    return filas, columnas
+    return (filas, columnas)
 
 def es_cuadrada(matriz):
     """
-    Comprueba si una matriz es cuadrada.
+    Función que comprueba si una matriz es cuadrada.
     
     Parámetros:
     matriz (lista de listas): La matriz a comprobar.
@@ -52,12 +52,9 @@ def es_cuadrada(matriz):
     """
     if dimension(matriz) is None or not isinstance(matriz, list):
         return False
+
     dim = dimension(matriz)
     return dim[0] == dim[1]
-    # if (len(matriz) == 0 or len(matriz) == len(matriz[0])):
-        # return True
-
-    # return False
 
 def es_simetrica(matriz):
     """
