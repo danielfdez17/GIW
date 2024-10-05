@@ -18,6 +18,9 @@
 """
 import xml.sax
 import html
+from geopy.geocoders import Nominatim
+from geopy.distance import geodesic
+from xml.etree import ElementTree
 # from pprint import pprint
 
 
@@ -60,12 +63,6 @@ def nombres_restaurantes(filename):
     parser.parse(filename)
     return sorted(manejador.get_lista())
 
-# pprint(nombres_restaurantes("practica3/restaurantes_v1_es_pretty.xml"))
-# pprint(nombres_restaurantes("practica3/restaurantes_v1_es.xml"))
-
-
-
-
 # def subcategorias(filename):
     # ...
 
@@ -74,5 +71,32 @@ def nombres_restaurantes(filename):
     # ...
 
 
-# def busqueda_cercania(filename, lugar, n):
-    # ...
+def busqueda_cercania(filename, lugar, n):
+    """
+        Metodo que devuelve una lista de parejas(distancia, nombre_restaurante) ordenadas de lugar de distancia mas cercana a mas lejano
+        con un numero de 'n' de km, y por ultimo debe desescapara el texto HTML escapado en los nombres de los restaurantes es decir convertir
+        entidades HTML en caracter normal.
+    """
+    geolocator = Nominatim(user_agent="GIW_pr3")
+    location = geolocator.geocode(lugar, addressdetails=True)    
+    
+    if not location:
+        return []
+
+    coords_lugar = (location.latitude, location.longitude)
+    arbol = ElementTree.parse(filename)
+    raiz = arbol.getroot()
+    restaurantes_tuple = []
+    for  i, service in enumerate(raiz.findall("./service")):
+        nombre_restaurante = service.find("./basicData/name").text #Nos introducimos en un objeto de basicData y luego een el campo 'name'
+        latitud = service.find("./geoData/latitude").text
+        longitud = service.find("./geoData/longitude").text
+        if latitud is not None and longitud is not None: #Checkeamos que no sean vacios
+            coords_restaurante = (float(latitud), float(longitud))
+            calculo_distancia = geodesic(coords_lugar, coords_restaurante).km
+            if calculo_distancia <= n:
+                nombre_restaurante = html.unescape(nombre_restaurante)
+                restaurantes_tuple.append((calculo_distancia, nombre_restaurante))
+    
+    restaurantes_tuple.sort()
+    return restaurantes_tuple
