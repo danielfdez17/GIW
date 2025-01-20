@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <title>Libro de firmas</title>
+</head>
+<body>
+  <!-- El uso de plantillas mitiga los ataques XSS porque que los motores de plantillas
+       por defecto eliminan toda aparición de código HTML que haya en los parámetros que reciben
+       al renderizar. Pero se debe complementar con validación exhaustiva de las entradas
+       de los usuarios. -->
+  <h1>Mostrando las firmas desde la fecha "{{desde}}"</h1>
+  <ul>
+  {% for firma in firmas %}
+    <li>{{firma[0]}}. {{firma[1]}}</li>
+  {% endfor %}
+  </ul>
+
+  
+  <br/>
+  <form action="http://localhost:5000/inserta_firma" method="post">
+    <input type="text" name="author" value="Escribe tu firma aqui">
+    <input type="submit" value="Enviar">
+  </form> 
+</body>
+</html>

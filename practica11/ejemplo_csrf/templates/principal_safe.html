@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Tienda de patatas</title>
+</head>
+<body>
+    <h1>¡¡Bienvenido a la tienda de patatas, {{ user }}!!
+    <a href="http://localhost:5000/logout"><button>Cerrar sesión</button></a>
+    </h1>
+
+    <h2>¿Quieres comprar patatas?</h2>
+    Dinos cuántos sacos quieres, dónde los enviamos y ya te lo cargamos en tu tarjeta de crédito.
+    
+    <p>
+    <form action="http://localhost:5000/comprar" method="POST">
+        Cantidad:<br>
+        <input type="hidden" name="anticsrf" value="{{ anticsrf }}">
+        <input type="number" step="1" name="num_items" value="1">
+        <br>
+        Dirección de entrega:<br>
+        <textarea name="address" rows="5" cols="40">Pepe Pérez
+Calle Falsa, 123
+28024 Madrid
+        </textarea>
+        <br>
+        <br><br>
+        <input type="submit" value="Comprar">
+    </form> 
+    </p>
+</body>
+</html>

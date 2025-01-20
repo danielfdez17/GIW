@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<title>SQL injection</title>
+	</head>
+	
+	<body>
+		<h1>Consulta SQL ejecutada</h1>
+		<p><code>{{query}}</code></p>
+
+		<h1>Pedidos:</h1>
+		{% for row in results %}
+  		<p><ul>
+			<li>ID: {{row[0]}}</li>
+			<li>User: {{row[1]}}</li>
+			<li>Item: {{row[2]}}</li>
+		</ul></p>
+		{% endfor %}
+	</body>
+</html>

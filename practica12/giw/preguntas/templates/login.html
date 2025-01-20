@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% block content %}
+{% if error %}
+    <h1>{{ error }}</h1>
+{% else %}
+    <form action="{% url 'preguntas:login' %}" method="post">
+        <div>
+        {{ login_form }}
+        </div>
+        {% csrf_token %}
+        <button type="submit">Iniciar sesión</button>
+    </form>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% load date_filters %}
+{% block title %} Añadir nueva respuesta {% endblock %}
+{% block content %}
+    <h2>{{ pregunta.titulo }} -- {{ pregunta.autor }}  ({{ pregunta.fecha|formato_fecha}})</h2>
+    <p> {{ pregunta.texto }} </p>
+    {% if respuestas %}
+    <h2>Respuestas</h2>
+    <ol>
+        {% for respuesta in respuestas %}
+            <li>
+                {{ respuesta.texto }} <br>
+                {{ respuesta.autor }} ({{ respuesta.fecha }}) 
+            </li>
+        {% endfor %}
+    </ol>
+    {% endif %}
+    <h2>Añadir nueva respuesta</h2>
+    <form action="{% url 'preguntas:detalle_pregunta' pregunta.id %}" method="post">
+        <table>
+            {{ respuesta_form }}
+        </table>
+        {% csrf_token %}
+        <button type="submit">Añadir respuesta</button>
+    </form>
+{% endblock %}

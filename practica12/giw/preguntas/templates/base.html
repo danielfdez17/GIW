@@ -1,0 +1,29 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}La web para preguntas y respuestas{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/preguntas.css' %}">
+</head>
+<body>
+    <header>
+        <h1>La web para preguntas y respuestas</h1>
+        <nav>
+            {% if request.user.username %}
+                <p>Bienvenido {{request.user.username}}</p>
+                <a class="btn-nav-session" href="{% url 'preguntas:logout' %}">Cerrar sesión</a>
+                <a class="btn-nav-session" href="{% url 'preguntas:ver_preguntas' %}">Ver preguntas</a>
+            {% else %}
+                <p>No autenticado</p>
+                <a class="btn-nav-session" href="{% url 'preguntas:login' %}">Iniciar sesión</a>
+            {% endif %}
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
